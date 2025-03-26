@@ -1,17 +1,56 @@
-import createRouter, { ROUTE } from "./router/index.js";
-import createRenderer from "./renderer/index.js";
+import Router, { ROUTE } from "./_router/index.js";
+import Store from "./_store/index.js";
+import * as view from "./_view/index.js";
+import * as model from "./_model/index.js";
+import * as controller from "./_controller/index.js";
 
-import { MainPage, ProfilePage, LoginPage, ErrorPage } from "./pages/index.js";
+const router = new Router();
 
-const router = createRouter();
+const userStore = new Store("user");
 
-router.addRoute(ROUTE.main, MainPage);
-router.addRoute(ROUTE.profile, ProfilePage);
-router.addRoute(ROUTE.login, LoginPage);
-router.addRoute(ROUTE.error, ErrorPage);
+// model
+const userModel = new model.User(userStore);
 
-const { render } = createRenderer(router.getRouteCallback);
+// view
+const mainView = new view.Main();
+const profileView = new view.Profile();
+const loginView = new view.Login();
+const errorView = new view.Error();
 
-document.addEventListener("DOMContentLoaded", render);
-window.addEventListener("popstate", render);
-window.addEventListener("routeChange", render);
+// controller
+const mainController = new controller.Main(mainView, userModel);
+const profileController = new controller.Profile(profileView, userModel);
+const loginController = new controller.Login(loginView, userModel);
+const errorController = new controller.Error(errorView, userModel);
+
+// guard
+const requireAuth = () => {
+  if (!userModel.userInfo?.username) {
+    Router.navigate(ROUTE.login);
+    return false;
+  }
+  return true; // 접근 허용
+};
+
+const requireGuest = () => {
+  if (userModel.userInfo?.username) {
+    Router.navigate(ROUTE.main);
+    return false;
+  }
+  return true; // 접근 허용
+};
+
+// 라우트 설정
+router.addRoute(ROUTE.main, mainController.render);
+router.addRoute(ROUTE.profile, profileController.render, [requireAuth]);
+router.addRoute(ROUTE.login, loginController.render, [requireGuest]);
+router.addRoute(ROUTE.error, errorController.render);
+
+// 가드 추가
+// router.addGuard(ROUTE.profile, authGuard);
+// router.addGuard(ROUTE.login, guestGuard);
+
+// 이벤트 리스너
+document.addEventListener("DOMContentLoaded", router.init);
+window.addEventListener("popstate", router.init);
+window.addEventListener("routeChange", router.init);
