@@ -11,6 +11,7 @@ export default defineConfig(({ command }) => {
         input: {
           main: "index.html",
           hash: "index.hash.html",
+          notFound: "404.html",
         },
       },
     },
