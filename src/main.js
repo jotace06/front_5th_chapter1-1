@@ -1,10 +1,10 @@
-import Router, { ROUTE } from "./_router/index.js";
+import { ROUTE, HistoryRouter } from "./_router/index.js";
 import Store from "./_store/index.js";
 import * as view from "./_view/index.js";
 import * as model from "./_model/index.js";
 import * as controller from "./_controller/index.js";
 
-const router = new Router();
+const router = new HistoryRouter();
 
 const userStore = new Store("user");
 
@@ -17,16 +17,20 @@ const profileView = new view.Profile();
 const loginView = new view.Login();
 const errorView = new view.Error();
 
-// controller
-const mainController = new controller.Main(mainView, userModel);
-const profileController = new controller.Profile(profileView, userModel);
-const loginController = new controller.Login(loginView, userModel);
+// controller에 router 주입
+const mainController = new controller.Main(mainView, userModel, router);
+const profileController = new controller.Profile(
+  profileView,
+  userModel,
+  router,
+);
+const loginController = new controller.Login(loginView, userModel, router);
 const errorController = new controller.Error(errorView, userModel);
 
 // guard
 const requireAuth = () => {
   if (!userModel.userInfo?.username) {
-    Router.navigate(ROUTE.login);
+    router.navigate(ROUTE.login);
     return false;
   }
   return true; // 접근 허용
@@ -34,7 +38,7 @@ const requireAuth = () => {
 
 const requireGuest = () => {
   if (userModel.userInfo?.username) {
-    Router.navigate(ROUTE.main);
+    router.navigate(ROUTE.main);
     return false;
   }
   return true; // 접근 허용

@@ -1,6 +1,6 @@
-import Router from "./router.js";
-import { createAuthGuard, createGuestGuard } from "./auth-guard.js";
 import { ROUTE } from "./constants.js";
+import HashRouter from "./hash-router.js";
+import HistoryRouter from "./history-router.js";
+import { createAuthGuard, createGuestGuard } from "./auth-guard.js";
 
-export default Router;
-export { ROUTE, createAuthGuard, createGuestGuard };
+export { ROUTE, HashRouter, HistoryRouter, createAuthGuard, createGuestGuard };

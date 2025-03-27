@@ -1,20 +1,21 @@
-import Router, { ROUTE } from "../_router/index.js";
+import { ROUTE } from "../_router/constants.js";
 
 class Login {
-  constructor(view, model) {
+  constructor(view, model, router) {
     this.view = view;
     this.model = model;
+    this.router = router;
   }
 
   login = (username) => {
     const result = this.model.login(username);
 
     if (result.status === "error") {
-      alert(result.message);
+      alert(result.error);
       return;
     }
 
-    Router.navigate(ROUTE.profile);
+    this.router.navigate(ROUTE.profile);
   };
 
   render = () => {
