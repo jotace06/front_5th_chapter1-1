@@ -1,9 +1,13 @@
 import BaseRouter from "./base-router.js";
+import { routerConfig } from "./config.js";
 import { ROUTE } from "./constants.js";
 
 class HistoryRouter extends BaseRouter {
   handleRouteChange = () => {
-    const currentPath = window.location.pathname || "/";
+    const currentPath = routerConfig.getRoutePath(window.location.pathname);
+    console.log("Current pathname:", window.location.pathname);
+    console.log("After removing base path:", currentPath);
+
     if (this.lastPath === currentPath) return;
     this.lastPath = currentPath;
 
@@ -23,7 +27,9 @@ class HistoryRouter extends BaseRouter {
   };
 
   navigate = (path) => {
-    window.history.pushState({}, "", path);
+    const fullPath = routerConfig.getFullPath(path);
+    console.log("Navigating to:", fullPath);
+    window.history.pushState({}, "", fullPath);
     window.dispatchEvent(new Event("routeChange"));
   };
 }
