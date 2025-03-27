@@ -7,10 +7,14 @@
     <!-- GitHub Pages용 리다이렉트 스크립트 -->
     <script type="text/javascript">
       (function (l) {
-        if (l.search && l.search.includes("/?/")) {
-          var redirectPath = l.search.replace("/?", "");
-          var fullPath = l.pathname + redirectPath;
-          window.history.replaceState(null, null, fullPath);
+        if (l.pathname.includes("/?/")) {
+          // /?/path 형식을 /path 형식으로 변환
+          var newPath = l.pathname.replace("/?/", "/");
+          window.history.replaceState(null, null, newPath + l.hash);
+        } else if (l.search && l.search.includes("/?/")) {
+          // search 부분의 /?/path를 /path로 변환
+          var newPath = l.pathname + l.search.replace("/?", "");
+          window.history.replaceState(null, null, newPath + l.hash);
         }
       })(window.location);
     </script>
