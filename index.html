@@ -6,14 +6,9 @@
 
     <!-- Start Single Page Apps for GitHub Pages -->
     <script type="text/javascript">
-      // 이 스크립트는 반드시 다른 스크립트들보다 먼저 실행되어야 함
       (function (l) {
-        console.log("Redirect script started");
-        console.log("Current location:", l.pathname);
-        console.log("Search string:", l.search);
-
-        if (l.search[1] === "/") {
-          console.log("Redirect condition met");
+        // base path를 고려한 리다이렉트 로직
+        if (l.search[1] === "/" || l.pathname !== "/front_5th_chapter1-1/") {
           var decoded = l.search
             .slice(1)
             .split("&")
@@ -22,17 +17,11 @@
             })
             .join("?");
 
-          console.log("Decoded path:", decoded);
-
           window.history.replaceState(
             null,
             null,
-            l.pathname.slice(0, -1) + decoded + l.hash,
+            "/front_5th_chapter1-1/" + (decoded ? "?" + decoded : "") + l.hash,
           );
-
-          console.log("New location:", window.location.href);
-        } else {
-          console.log("Redirect condition not met");
         }
       })(window.location);
     </script>
