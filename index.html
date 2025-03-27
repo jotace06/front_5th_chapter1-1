@@ -4,29 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- GitHub Pages에서 SPA 지원을 위한 리다이렉트 -->
+    <!-- GitHub Pages용 리다이렉트 스크립트 -->
     <script type="text/javascript">
       (function (l) {
-        console.log("Index script - Current URL:", l.href);
-
         if (l.search && l.search.includes("/?/")) {
-          console.log("Index script - Redirect condition met");
-          var decoded = l.search
-            .slice(1)
-            .split("&")
-            .map(function (s) {
-              return s.replace(/~and~/g, "&");
-            })
-            .join("?");
-
-          console.log("Index script - Decoded path:", decoded);
-          window.history.replaceState(
-            null,
-            null,
-            l.pathname + decoded + l.hash,
-          );
-        } else {
-          console.log("Index script - No redirect needed");
+          var redirectPath = l.search.replace("/?", "");
+          var fullPath = l.pathname + redirectPath;
+          window.history.replaceState(null, null, fullPath);
         }
       })(window.location);
     </script>
