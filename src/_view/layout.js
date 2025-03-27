@@ -1,4 +1,4 @@
-import { PATHS, createPath, normalizePath } from "../_utils/paths.js";
+import { PATHS, createPath, normalizePath } from "../_utils/index.js";
 
 class Layout {
   static getNavItems(userInfo, currentPath) {

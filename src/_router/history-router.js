@@ -1,5 +1,5 @@
 import BaseRouter from "./base-router.js";
-import { normalizePath, createPath } from "../_utils/paths.js";
+import { normalizePath, createPath } from "../_utils/index.js";
 import { ROUTE } from "./constants.js";
 
 class HistoryRouter extends BaseRouter {
