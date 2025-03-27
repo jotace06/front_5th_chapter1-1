@@ -26,6 +26,7 @@ class User {
       email: "",
       bio: "",
     };
+
     this.store.save(updatedUserInfo);
 
     return {
@@ -36,10 +37,20 @@ class User {
 
   logout() {
     this.store.clear();
+
+    return {
+      status: "success",
+      data: null,
+    };
   }
 
   update(userInfo) {
     this.store.save(userInfo);
+
+    return {
+      status: "success",
+      data: userInfo,
+    };
   }
 }
 

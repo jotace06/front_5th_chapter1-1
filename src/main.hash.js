@@ -1,4 +1,9 @@
-import { ROUTE, HashRouter } from "./_router/index.js";
+import {
+  ROUTE,
+  HashRouter,
+  createAuthGuard,
+  createGuestGuard,
+} from "./_router/index.js";
 import { Store } from "./_store/index.js";
 import * as view from "./_view/index.js";
 import * as model from "./_model/index.js";
@@ -24,22 +29,8 @@ const profileController = new controller.Profile(
 const loginController = new controller.Login(loginView, userModel, router);
 const errorController = new controller.Error(errorView, userModel);
 
-// guard
-const requireAuth = () => {
-  if (!userModel.userInfo?.username) {
-    router.navigate(ROUTE.login);
-    return false;
-  }
-  return true;
-};
-
-const requireGuest = () => {
-  if (userModel.userInfo?.username) {
-    router.navigate(ROUTE.main);
-    return false;
-  }
-  return true;
-};
+const requireAuth = createAuthGuard(userModel, router);
+const requireGuest = createGuestGuard(userModel, router);
 
 router.addRoute(ROUTE.main, mainController.render);
 router.addRoute(ROUTE.profile, profileController.render, [requireAuth]);
@@ -48,4 +39,3 @@ router.addRoute(ROUTE.error, errorController.render);
 
 document.addEventListener("DOMContentLoaded", router.init);
 window.addEventListener("hashchange", router.init);
-window.addEventListener("routeChange", router.init);

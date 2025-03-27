@@ -1,4 +1,4 @@
-import { ENV } from "./environments.js";
-import { PATHS, createPath, normalizePath } from "./paths.js";
+import { ENV } from "../environments.js";
+import { createPath, normalizePath } from "./paths.js";
 
-export { ENV, PATHS, createPath, normalizePath };
+export { ENV, createPath, normalizePath };

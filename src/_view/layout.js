@@ -1,4 +1,5 @@
-import { PATHS, createPath, normalizePath } from "../_utils/index.js";
+import { ROUTE } from "../_router/constants.js";
+import { createPath, normalizePath } from "../_utils/index.js";
 
 /**
  * Layout 클래스
@@ -80,25 +81,25 @@ export default Layout;
 
 const getDefaultNavItems = (isLoggedIn) => [
   {
-    path: PATHS.HOME,
+    path: ROUTE.main,
     id: "home",
     text: "홈",
     visible: true,
   },
   {
-    path: PATHS.PROFILE,
+    path: ROUTE.profile,
     id: "profile",
     text: "프로필",
     visible: isLoggedIn,
   },
   {
-    path: PATHS.LOGOUT,
+    path: ROUTE.logout,
     id: "logout",
     text: "로그아웃",
     visible: isLoggedIn,
   },
   {
-    path: PATHS.LOGIN,
+    path: ROUTE.login,
     id: "login-link",
     text: "로그인",
     visible: !isLoggedIn,

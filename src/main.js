@@ -1,4 +1,9 @@
-import { ROUTE, HistoryRouter } from "./_router/index.js";
+import {
+  ROUTE,
+  HistoryRouter,
+  createAuthGuard,
+  createGuestGuard,
+} from "./_router/index.js";
 import { Store } from "./_store/index.js";
 import * as view from "./_view/index.js";
 import * as model from "./_model/index.js";
@@ -24,22 +29,8 @@ const profileController = new controller.Profile(
 const loginController = new controller.Login(loginView, userModel, router);
 const errorController = new controller.Error(errorView, userModel);
 
-// guard
-const requireAuth = () => {
-  if (!userModel.userInfo?.username) {
-    router.navigate(ROUTE.login);
-    return false;
-  }
-  return true; // 접근 허용
-};
-
-const requireGuest = () => {
-  if (userModel.userInfo?.username) {
-    router.navigate(ROUTE.main);
-    return false;
-  }
-  return true; // 접근 허용
-};
+const requireAuth = createAuthGuard(userModel, router);
+const requireGuest = createGuestGuard(userModel, router);
 
 // 라우트 설정
 router.addRoute(ROUTE.main, mainController.render);

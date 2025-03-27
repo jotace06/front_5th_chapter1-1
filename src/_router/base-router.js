@@ -14,8 +14,8 @@ class BaseRouter {
     });
   };
 
-  init = (path = location.pathname) => {
-    this.handleRouteChange(path);
+  init = () => {
+    this.handleRouteChange();
   };
 
   navigate = () => {

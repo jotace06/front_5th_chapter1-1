@@ -4,8 +4,6 @@ import { ROUTE } from "./constants.js";
 class HashRouter extends BaseRouter {
   constructor() {
     super();
-    this.lastHash = null;
-    this.routes = [];
   }
 
   addRoute = (path, handler, guards = []) => {
