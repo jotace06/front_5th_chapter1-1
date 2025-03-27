@@ -4,7 +4,7 @@ import { ROUTE } from "./constants.js";
 
 class HistoryRouter extends BaseRouter {
   handleRouteChange = () => {
-    const currentPath = normalizePath(window.location.pathname);
+    const currentPath = normalizePath(location.pathname);
     if (this.lastPath === currentPath) return;
     this.lastPath = currentPath;
 

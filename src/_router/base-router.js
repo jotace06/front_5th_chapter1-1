@@ -2,8 +2,8 @@
 class BaseRouter {
   constructor() {
     this.lastPath = null;
+    this.lastHash = null;
     this.routes = [];
-    this.init = this.init.bind(this);
   }
 
   addRoute = (path, handler, guards = []) => {
@@ -14,8 +14,8 @@ class BaseRouter {
     });
   };
 
-  init = () => {
-    this.handleRouteChange();
+  init = (path = location.pathname) => {
+    this.handleRouteChange(path);
   };
 
   navigate = () => {

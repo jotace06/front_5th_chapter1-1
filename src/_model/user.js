@@ -5,7 +5,6 @@ class User {
 
   get userInfo() {
     const userInfo = this.store.load();
-    // if (!userInfo) return null;
 
     return {
       username: userInfo?.username ?? "",
@@ -22,16 +21,16 @@ class User {
       };
     }
 
-    const newState = {
+    const updatedUserInfo = {
       username: username.trim(),
       email: "",
       bio: "",
     };
-    this.store.save(newState);
+    this.store.save(updatedUserInfo);
 
     return {
       status: "success",
-      data: newState,
+      data: updatedUserInfo,
     };
   }
 

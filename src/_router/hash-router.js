@@ -4,7 +4,7 @@ import { ROUTE } from "./constants.js";
 class HashRouter extends BaseRouter {
   constructor() {
     super();
-    this.lastPath = null;
+    this.lastHash = null;
     this.routes = [];
     this.init = this.init.bind(this);
   }
@@ -18,17 +18,16 @@ class HashRouter extends BaseRouter {
   };
 
   init = () => {
-    // 초기 hash가 없을 경우 처리
-    if (!window.location.hash) {
-      window.location.hash = "#/";
+    if (!location.hash) {
+      location.hash = "#/";
     }
     this.handleRouteChange();
   };
 
   handleRouteChange = () => {
-    const currentHash = window.location.hash.slice(1) || "/";
-    if (this.lastPath === currentHash) return;
-    this.lastPath = currentHash;
+    const currentHash = location.hash.slice(1) || "/";
+    if (this.lastHash === currentHash) return;
+    this.lastHash = currentHash;
 
     const route =
       this.routes.find((r) => r.path === currentHash) ||

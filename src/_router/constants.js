@@ -4,8 +4,3 @@ export const ROUTE = {
   login: "/login",
   error: "*",
 };
-
-export const ROUTER_TYPE = {
-  HISTORY: "history",
-  HASH: "hash",
-};
