@@ -7,7 +7,16 @@ class Login {
     this.router = router;
   }
 
-  login = (username) => {
+  handleLogin = (event) => {
+    event.preventDefault();
+
+    const username = this.view.$username().value;
+
+    if (!username.trim()) {
+      alert("사용자 이름을 입력해주세요.");
+      return;
+    }
+
     const result = this.model.login(username);
 
     if (result.status === "error") {
@@ -20,7 +29,7 @@ class Login {
 
   render = () => {
     this.view.render();
-    this.view.bindCallback("login", this.login);
+    this.view.setupEventListeners("login", this.handleLogin);
   };
 }
 

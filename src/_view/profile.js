@@ -8,26 +8,13 @@ class Profile {
   $nav = () => this.$root.querySelector("nav ul");
   $profileForm = () => this.$root.querySelector("#profile-form");
 
-  bindCallback = (event, handler) => {
+  setupEventListeners = (event, handler) => {
     switch (event) {
       case "navigate":
-        this.$nav()?.addEventListener("click", (e) => {
-          e.preventDefault();
-          const link = e.target.closest("a");
-          if (!link) return;
-          handler(link.id);
-        });
+        this.$nav()?.addEventListener("click", handler);
         break;
       case "update":
-        this.$profileForm()?.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const formData = new FormData(e.target);
-          handler({
-            username: formData.get("username"),
-            email: formData.get("email"),
-            bio: formData.get("bio"),
-          });
-        });
+        this.$profileForm()?.addEventListener("submit", handler);
         break;
     }
   };

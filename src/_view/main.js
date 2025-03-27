@@ -7,15 +7,10 @@ class Main {
 
   $nav = () => this.$root.querySelector("nav ul");
 
-  bindCallback = (event, handler) => {
+  setupEventListeners = (event, handler) => {
     switch (event) {
       case "navigate":
-        this.$nav()?.addEventListener("click", (e) => {
-          e.preventDefault();
-          const link = e.target.closest("a");
-          if (!link) return;
-          handler(link.id);
-        });
+        this.$nav()?.addEventListener("click", handler);
         break;
     }
   };

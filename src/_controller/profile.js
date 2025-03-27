@@ -7,7 +7,14 @@ class Profile {
     this.router = router;
   }
 
-  handleNavigation = (action) => {
+  handleNavigation = (event) => {
+    event.preventDefault();
+
+    const link = event.target.closest("a");
+    if (!link) return;
+
+    const action = link.id;
+
     switch (action) {
       case "home":
         this.router.navigate(ROUTE.main);
@@ -22,14 +29,22 @@ class Profile {
     }
   };
 
-  update = (userInfo) => {
+  handleUpdate = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const userInfo = {
+      username: formData.get("username"),
+      email: formData.get("email"),
+      bio: formData.get("bio"),
+    };
     this.model.update(userInfo);
   };
 
   render = () => {
     this.view.render(this.model.userInfo);
-    this.view.bindCallback("navigate", this.handleNavigation);
-    this.view.bindCallback("update", this.update);
+    this.view.setupEventListeners("navigate", this.handleNavigation);
+    this.view.setupEventListeners("update", this.handleUpdate);
   };
 }
 

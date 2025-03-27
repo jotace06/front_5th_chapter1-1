@@ -6,7 +6,6 @@ class HashRouter extends BaseRouter {
     super();
     this.lastHash = null;
     this.routes = [];
-    this.init = this.init.bind(this);
   }
 
   addRoute = (path, handler, guards = []) => {

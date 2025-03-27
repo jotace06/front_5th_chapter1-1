@@ -1,23 +1,27 @@
 import { PATHS, createPath, normalizePath } from "../_utils/index.js";
 
+/**
+ * Layout 클래스
+ * @static getNavigationLinks - 현재 경로와 사용자 상태에 따른 네비게이션 링크 생성
+ * @static header - 로고와 네비게이션을 포함한 헤더 섹션
+ * @static footer - 푸터 섹션
+ * @static render - 전체 레이아웃 구조 렌더링
+ */
 class Layout {
-  static getNavItems(userInfo, currentPath) {
+  static getNavigationLinks(userInfo, currentPath) {
     const isLoggedIn = !!userInfo.username;
 
-    // 기본 경로 정의
-    const baseNavItems = getNavItems(isLoggedIn);
-    // 현재 경로에서 basePath 제거
+    const navItems = getDefaultNavItems(isLoggedIn);
     const cleanPath = normalizePath(currentPath);
 
-    return baseNavItems
-      .filter((item) => item.show)
+    return navItems
+      .filter((item) => item.visible) // show -> visible로 변경
       .map((item) => {
         const isActive = cleanPath === item.path;
         const className = isActive
           ? "text-blue-600 font-bold"
           : "text-gray-600";
 
-        // href에 basePath 포함
         const fullPath = createPath(item.path);
 
         return `
@@ -43,7 +47,7 @@ class Layout {
 
       <nav class="bg-white shadow-md p-2 sticky top-14">
         <ul class="flex justify-around">
-          ${this.getNavItems(userInfo, currentPath)}
+          ${this.getNavigationLinks(userInfo, currentPath)}
         </ul>
       </nav>
     `;
@@ -74,29 +78,29 @@ class Layout {
 
 export default Layout;
 
-const getNavItems = (isLoggedIn) => [
+const getDefaultNavItems = (isLoggedIn) => [
   {
     path: PATHS.HOME,
     id: "home",
     text: "홈",
-    show: true,
+    visible: true,
   },
   {
     path: PATHS.PROFILE,
     id: "profile",
     text: "프로필",
-    show: isLoggedIn,
+    visible: isLoggedIn,
   },
   {
     path: PATHS.LOGOUT,
     id: "logout",
     text: "로그아웃",
-    show: isLoggedIn,
+    visible: isLoggedIn,
   },
   {
     path: PATHS.LOGIN,
     id: "login-link",
     text: "로그인",
-    show: !isLoggedIn,
+    visible: !isLoggedIn,
   },
 ];

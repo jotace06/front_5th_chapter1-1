@@ -15,18 +15,10 @@ class Login {
     return this.$root.querySelector("button[type='submit']");
   };
 
-  bindCallback = (event, handler) => {
+  setupEventListeners = (event, handler) => {
     switch (event) {
       case "login":
-        this.$loginForm()?.addEventListener("submit", (e) => {
-          e.preventDefault();
-          handler(this.$username().value);
-        });
-
-        // this.$loginButton()?.addEventListener("click", (e) => {
-        //   e.preventDefault();
-        //   handler(this.$username().value);
-        // });
+        this.$loginForm()?.addEventListener("submit", handler);
         break;
     }
   };

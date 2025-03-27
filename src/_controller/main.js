@@ -7,7 +7,14 @@ class Main {
     this.router = router;
   }
 
-  handleNavigation = (action) => {
+  handleNavigation = (event) => {
+    event.preventDefault();
+
+    const link = event.target.closest("a");
+    if (!link) return;
+
+    const action = link.id;
+
     switch (action) {
       case "home":
         this.router.navigate(ROUTE.main);
@@ -27,7 +34,7 @@ class Main {
 
   render = () => {
     this.view.render(this.model.userInfo);
-    this.view.bindCallback("navigate", this.handleNavigation);
+    this.view.setupEventListeners("navigate", this.handleNavigation);
   };
 }
 
