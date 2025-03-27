@@ -10,9 +10,9 @@ export default defineConfig(({ command }) => {
       outDir: "dist",
       rollupOptions: {
         input: {
-          main: resolve(__dirname, "index.html"),
+          index: resolve(__dirname, "index.html"),
           hash: resolve(__dirname, "index.hash.html"),
-          404: resolve(__dirname, "404.html"),
+          notFound: resolve(__dirname, "404.html"),
         },
       },
     },

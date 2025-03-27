@@ -4,11 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Start Single Page Apps for GitHub Pages -->
+    <!-- GitHub Pages에서 SPA 지원을 위한 리다이렉트 -->
     <script type="text/javascript">
       (function (l) {
-        // base path를 고려한 리다이렉트 로직
-        if (l.search[1] === "/" || l.pathname !== "/front_5th_chapter1-1/") {
+        console.log("Index script - Current URL:", l.href);
+
+        if (l.search && l.search.includes("/?/")) {
+          console.log("Index script - Redirect condition met");
           var decoded = l.search
             .slice(1)
             .split("&")
@@ -17,15 +19,17 @@
             })
             .join("?");
 
+          console.log("Index script - Decoded path:", decoded);
           window.history.replaceState(
             null,
             null,
-            "/front_5th_chapter1-1/" + (decoded ? "?" + decoded : "") + l.hash,
+            l.pathname + decoded + l.hash,
           );
+        } else {
+          console.log("Index script - No redirect needed");
         }
       })(window.location);
     </script>
-    <!-- End Single Page Apps for GitHub Pages -->
 
     <title>항해플러스 SNS</title>
     <script src="https://cdn.tailwindcss.com"></script>
