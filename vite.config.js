@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig(({ command }) => {
@@ -9,9 +10,9 @@ export default defineConfig(({ command }) => {
       outDir: "dist",
       rollupOptions: {
         input: {
-          main: "index.html",
-          hash: "index.hash.html",
-          notFound: "404.html",
+          main: resolve(__dirname, "index.html"),
+          hash: resolve(__dirname, "index.hash.html"),
+          404: resolve(__dirname, "404.html"),
         },
       },
     },
