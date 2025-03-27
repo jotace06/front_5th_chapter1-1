@@ -1,45 +1,28 @@
+import { PATHS, createPath, normalizePath } from "../_utils/paths.js";
+
 class Layout {
   static getNavItems(userInfo, currentPath) {
     const isLoggedIn = !!userInfo.username;
 
-    const navItems = [
-      {
-        path: "/",
-        id: "home",
-        text: "홈",
-        show: true,
-      },
-      {
-        path: "/profile",
-        id: "profile",
-        text: "프로필",
-        show: isLoggedIn,
-      },
-      {
-        path: "/logout",
-        id: "logout",
-        text: "로그아웃",
-        show: isLoggedIn,
-      },
-      {
-        path: "/login",
-        id: "login-link",
-        text: "로그인",
-        show: !isLoggedIn,
-      },
-    ];
+    // 기본 경로 정의
+    const baseNavItems = getNavItems(isLoggedIn);
+    // 현재 경로에서 basePath 제거
+    const cleanPath = normalizePath(currentPath);
 
-    return navItems
+    return baseNavItems
       .filter((item) => item.show)
       .map((item) => {
-        const isActive = currentPath === item.path;
+        const isActive = cleanPath === item.path;
         const className = isActive
           ? "text-blue-600 font-bold"
           : "text-gray-600";
 
+        // href에 basePath 포함
+        const fullPath = createPath(item.path);
+
         return `
           <li>
-            <a href="${item.path}" id="${item.id}" class="${className}">
+            <a href="${fullPath}" id="${item.id}" class="${className}">
               ${item.text}
             </a>
           </li>
@@ -90,3 +73,30 @@ class Layout {
 }
 
 export default Layout;
+
+const getNavItems = (isLoggedIn) => [
+  {
+    path: PATHS.HOME,
+    id: "home",
+    text: "홈",
+    show: true,
+  },
+  {
+    path: PATHS.PROFILE,
+    id: "profile",
+    text: "프로필",
+    show: isLoggedIn,
+  },
+  {
+    path: PATHS.LOGOUT,
+    id: "logout",
+    text: "로그아웃",
+    show: isLoggedIn,
+  },
+  {
+    path: PATHS.LOGIN,
+    id: "login-link",
+    text: "로그인",
+    show: !isLoggedIn,
+  },
+];

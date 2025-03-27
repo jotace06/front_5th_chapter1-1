@@ -1,5 +1,5 @@
 import { ROUTE, HashRouter } from "./_router/index.js";
-import Store from "./_store/index.js";
+import { Store } from "./_store/index.js";
 import * as view from "./_view/index.js";
 import * as model from "./_model/index.js";
 import * as controller from "./_controller/index.js";
