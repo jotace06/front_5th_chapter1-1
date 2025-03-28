@@ -3,10 +3,6 @@ import { normalizePath, createPath } from "../_utils/index.js";
 import { ROUTE } from "./constants.js";
 
 class HistoryRouter extends BaseRouter {
-  constructor() {
-    super();
-  }
-
   handleRouteChange = () => {
     const currentPath = normalizePath(location.pathname);
     if (this.lastPath === currentPath) return;

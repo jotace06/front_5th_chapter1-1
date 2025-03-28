@@ -2,10 +2,6 @@ import BaseRouter from "./base-router.js";
 import { ROUTE } from "./constants.js";
 
 class HashRouter extends BaseRouter {
-  constructor() {
-    super();
-  }
-
   addRoute = (path, handler, guards = []) => {
     this.routes.push({
       path,
